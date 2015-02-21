@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+  http://www.springframework.org/schema/jee
+  http://www.springframework.org/schema/jee/spring-jee.xsd
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<jee:jndi-lookup id="myConnectionFactory" jndi-name="jms/SampleMDBConnectionFactory" resource-ref="false" lookup-on-startup="true" />
+
+	<bean id="myMessageListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="myConnectionFactory" />
+		<property name="destinationResolver" ref="jndiDestinationResolver" />
+		<property name="destinationName" value="jms/SampleMDBQueue" />
+		<property name="messageListener" ref="myMessageListener" />
+	</bean>
+
+	<bean id="jndiDestinationResolver"
+		class="org.springframework.jms.support.destination.JndiDestinationResolver">
+		<property name="cache" value="true" />
+	</bean>
+
+	<bean id="myMessageListener" class="com.hlb.dblogging.mdb.listener.MessageListenerBean" />
+
+</beans>

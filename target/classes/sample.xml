@@ -1,0 +1,107 @@
+<XML>
+<LogInterface>MBASE</LogInterface>
+
+<MessageFormat>XML</MessageFormat>
+
+<Host>BrokerHost1</Host>
+
+<TransType>270103</TransType>
+
+<MessageID>jf-feewfef-efef</MessageID>
+
+<ServiceID>123</ServiceID>
+
+<ApplName>RIBMY</ApplName>
+
+<ApplID>RIBMY</ApplID>
+
+<UniqueProcessID>3543543654645907</UniqueProcessID>
+
+<JournalSeq>0001</JournalSeq>
+
+<LogLevel>info</LogLevel>
+
+<Content><![CDATA[ <Msg>
+
+ <Header>
+
+ <SC_TransType>270103</SC_TransType>
+
+ <SC_ApplName>RIBMY</SC_ApplName>
+
+ <SC_ApplID>RIBMY</SC_ApplID>
+
+ <SC_ApplTransID>123456</SC_ApplTransID>
+ <SC_TransDate>220814</SC_TransDate>
+
+ <SC_TransTime>123456</SC_TransTime>
+
+ <SC_ApplUserID/><SC_TellerID/>
+
+ <SC_BranchCode/><SC_CtrlUnit/>
+
+ </Header>
+
+ <Body>
+
+ <IBFT>
+
+ <Request>
+
+ <JournalSequence>22298</JournalSequence>
+ <CCNo>4574010010010020</CCNo>
+
+ <FromAccType>01</FromAccType>
+
+ <DebAccNo>00101503602</DebAccNo>
+
+ <TranName>00000000C00000000500000000</TranName>
+
+ <TranAmt>20</TranAmt>
+
+ <FeeAmt>1</FeeAmt>
+
+ <TRefNo>pay for lunch</TRefNo>
+
+ <BeneBkRoute>420709</BeneBkRoute>
+
+ <AbvBeneBk>BSN</AbvBeneBk>
+
+ <BeneAccNo>12345678900</BeneAccNo>
+
+ <BeneAccType>3</BeneAccType>
+
+ <TotAmt>21</TotAmt>
+
+ <RR>TESTRR</RR>
+ <OPD>TESTOPD</OPD>
+
+ <SenderName>XiaoMi</SenderName>
+
+ <GSTInd>Y</GSTInd>
+
+ <TicketNo>TESTTICKET</TicketNo>
+
+ <GSTRate1>6</GSTRate1>
+
+ <GSTAmt1>100</GSTAmt1>
+
+ <GSTCode1>SR1</GSTCode1>
+
+ <GSTExc>I</GSTExc>
+
+ </Request>
+
+ </IBFT>
+
+ </Body>
+
+</Msg>]]></Content>
+
+<Segment>Req</Segment>
+
+<TransDate>20141110</TransDate>
+
+<TransTime>120202</TransTime>
+
+</XML>
