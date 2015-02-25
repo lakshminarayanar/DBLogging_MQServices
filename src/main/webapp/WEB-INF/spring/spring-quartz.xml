@@ -12,8 +12,8 @@
 	<bean id="retrySavingMessageJob" class="com.hlb.dblogging.quartz.services.RetryFailedMessageSavingJob"></bean>
 	
 	
-	<bean name="saveFailedMessagesJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-			<property name="jobClass" value="com.hlb.dblogging.quartz.servies.SaveMessageServiceJob"></property>	
+	<bean name="saveFailedMessagesJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+			<property name="jobClass" value="com.hlb.dblogging.quartz.services.RetryFailedMessageSavingJob"></property>	
 	</bean>
 	
 	<bean id="cronTriggerSaveFailedMessagesJob" class="org.springframework.scheduling.quartz.CronTriggerBean">

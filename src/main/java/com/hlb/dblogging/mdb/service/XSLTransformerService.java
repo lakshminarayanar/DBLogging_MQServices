@@ -24,7 +24,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
 
 import com.hlb.dblogging.app.context.ApplicationContextProvider;
@@ -78,7 +77,7 @@ public class XSLTransformerService {
 	@SuppressWarnings("rawtypes")
 	public void processXMLMessage(Message message) throws ParseException{
 		byte data[] = null;
-		ByteArrayOutputStream saveOnErrorXML= new ByteArrayOutputStream();
+		ByteArrayOutputStream saveOnErrorXMLMessage= new ByteArrayOutputStream();
 		try {
 			BytesMessage bm = (BytesMessage) message;
 			data = new byte[(int) bm.getBodyLength()];
@@ -95,7 +94,7 @@ public class XSLTransformerService {
 
 			transformer.transform(xmlInput,	new StreamResult(outputXML));
 			ApplLogger.getLogger().info("Output XML Data is : " + outputXML);
-			saveOnErrorXML = outputXML;
+			saveOnErrorXMLMessage = outputXML;
 			ApplLogger.getLogger().info("XML formatting and pre processing is done.. Starting parse xml and save..");
 			List beanList = new QueryXML().mappingXMLToPojo(new ByteArrayInputStream(outputXML.toByteArray()));
 			if(beanList!=null && beanList.size()==2){
@@ -126,7 +125,7 @@ public class XSLTransformerService {
 					ApplLogger.getLogger().info("AuditDetailService bean is not created by spring container..");
 			}catch(Exception e){
 				ApplLogger.getLogger().error("Exception caught while saving to DB and saving the message to FileSystem.. :",e);
-				FileUtils.writeByteArrayToFile(new File("C:\\Recover\\Save\\Message_"+getFormattedTimestamp()), saveOnErrorXML.toByteArray());
+				FileUtils.writeByteArrayToFile(new File("C:\\Recover\\Save\\Message_"+getFormattedTimestamp()), saveOnErrorXMLMessage.toByteArray());
 			}
             
 			}
@@ -135,7 +134,7 @@ public class XSLTransformerService {
 			try {
 				FileUtils.writeByteArrayToFile(new File("C:\\Recover\\ProcessAndSave\\Message_"+getFormattedTimestamp()), data);
 			} catch (IOException e1) {
-				ApplLogger.getLogger().error("Exception caught while saving xml message to FileSystem :",e);
+				ApplLogger.getLogger().error("Exception caught while saving xml message to FileSystem :",e1);
 			}
 		}
 	}

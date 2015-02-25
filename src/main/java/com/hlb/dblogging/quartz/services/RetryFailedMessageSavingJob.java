@@ -6,8 +6,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 public class RetryFailedMessageSavingJob extends QuartzJobBean{	
 
-	SaveMessageServiceJob messageServiceJob = new SaveMessageServiceJob();
-	@Override
+	SaveMessageService messageServiceJob = new SaveMessageService();
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException{
 			try {
@@ -16,10 +15,10 @@ public class RetryFailedMessageSavingJob extends QuartzJobBean{
 				e.printStackTrace();
 			}		
 	}
-	public SaveMessageServiceJob getMessageServiceJob() {
+	public SaveMessageService getMessageServiceJob() {
 		return messageServiceJob;
 	}
-	public void setMessageServiceJob(SaveMessageServiceJob messageServiceJob) {
+	public void setMessageServiceJob(SaveMessageService messageServiceJob) {
 		this.messageServiceJob = messageServiceJob;
 	}	
 	
