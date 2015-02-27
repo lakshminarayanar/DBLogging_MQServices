@@ -18,7 +18,7 @@
 	
 	<bean id="cronTriggerSaveFailedMessagesJob" class="org.springframework.scheduling.quartz.CronTriggerBean">
 			<property name="jobDetail" ref="saveFailedMessagesJob"></property>
-			<property name="cronExpression" value="0 0 21 L * ?"></property>	
+			<property name="cronExpression" value="0 0/5 * * * ?"></property>	
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

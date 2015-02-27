@@ -47,9 +47,9 @@ import com.hlb.dblogging.mdb.service.XSLTransformerService;
                 try  
                 {  
                      String msgText = ((TextMessage) message).getText();  
-                    logger_c.debug("About to process message: " + msgText);  
+                    //logger_c.debug("About to process message: " + msgText);  
    
-                    logger_c.info("Data is received : "+msgText);
+                    logger_c.debug("Data is received : "+msgText);
  
               }  
                catch (JMSException jmsEx_p)  

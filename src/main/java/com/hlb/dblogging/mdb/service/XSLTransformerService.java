@@ -24,7 +24,9 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
 import com.hlb.dblogging.app.context.ApplicationContextProvider;
 import com.hlb.dblogging.jpa.model.AuditDetail;
@@ -33,35 +35,14 @@ import com.hlb.dblogging.jpa.service.AuditDetailService;
 import com.hlb.dblogging.jpa.service.AuditMasterService;
 import com.hlb.dblogging.jpa.service.QueryXML;
 import com.hlb.dblogging.log.utility.ApplLogger;
+import com.hlb.dblogging.log.utility.LogLevel;
 import com.hlb.dblogging.xml.utility.XSLTransformer;
 
+@Service
 public class XSLTransformerService {
+	
+	
 
-/*	static {
-		try{
-			System.out.println("Started static block... @@@@@@@@@@@@@@@@@@@@@@@@@");
-			TransformerFactory factory = TransformerFactory.newInstance();
-			//Source xslt = new StreamSource(new File("sample-content.xsl"));
-			InputStream input = XSLTransformerService.class.getResourceAsStream("/xml-transformer.xsl");
-			Source xslt = new StreamSource(input);
-			Transformer transformer = factory.newTransformer(xslt);
-			
-			InputStream input2 = XSLTransformerService.class.getResourceAsStream("/sample.xml");
-			Source text = new StreamSource(input2);
-			//Source text = new StreamSource(new File("sample.xml"));
-			transformer.transform(text, new StreamResult(new File("xslt-output.xml")));
-			System.out.println("Input and Input2 as follows : "+input+input2);
-			System.out.println("Mission Done");
-			
-			new XSLTransformerService().getPath();
-			//String test= IOUtils.toString(new ClassPathResource("sample.xml").getInputStream());
-			//System.out.println("File path : "+test);
-		}catch(Exception e){
-			System.out.println("************************************ Exception stack trace here................");
-			e.printStackTrace();
-		}
-	}
-*/
 	public void getPath() throws IOException{
 		InputStream in = getClass().getResourceAsStream("/sample.xml");
 		BufferedReader input = new BufferedReader(new InputStreamReader(in));
@@ -74,39 +55,79 @@ public class XSLTransformerService {
 		
 	}
 	
-	@SuppressWarnings("rawtypes")
 	public void processXMLMessage(Message message) throws ParseException{
 		byte data[] = null;
+		String inputStreamString = null;
+		ByteArrayOutputStream outputXML = null;
 		ByteArrayOutputStream saveOnErrorXMLMessage= new ByteArrayOutputStream();
 		try {
 			BytesMessage bm = (BytesMessage) message;
 			data = new byte[(int) bm.getBodyLength()];
 			bm.readBytes(data);
-			InputStream input = new ByteArrayInputStream(data);
-			ByteArrayOutputStream outputXML = new ByteArrayOutputStream();
-			TransformerFactory factory = TransformerFactory.newInstance();
-			// Source xslt = new StreamSource(new File("sample-content.xsl"));
-			ApplLogger.getLogger().debug("XML Data from Queue Is : "+ new String(data));
-			Source xmlInput = new StreamSource(input);
-			Source xslt = new StreamSource(new ByteArrayInputStream(XSLTransformer.xslTranformerStream.getBytes(StandardCharsets.UTF_8)));
-			//Source xslt = new StreamSource(XSLTransformerService.class.getResourceAsStream("/xml-transformer.xsl"));
-			Transformer transformer = factory.newTransformer(xslt);
-
-			transformer.transform(xmlInput,	new StreamResult(outputXML));
-			ApplLogger.getLogger().info("Output XML Data is : " + outputXML);
-			saveOnErrorXMLMessage = outputXML;
-			ApplLogger.getLogger().info("XML formatting and pre processing is done.. Starting parse xml and save..");
-			List beanList = new QueryXML().mappingXMLToPojo(new ByteArrayInputStream(outputXML.toByteArray()));
-			if(beanList!=null && beanList.size()==2){
-				AuditMaster auditMasterBean = null;
-				AuditDetail auditDetailBean = null;
-				if(beanList.get(0) instanceof AuditMaster){
-					 auditMasterBean = (AuditMaster) beanList.get(0);
-					 auditDetailBean = (AuditDetail) beanList.get(1);
+			//InputStream input = new ByteArrayInputStream(data);
+			outputXML = new ByteArrayOutputStream();
+			
+			// Storing input stream in string for multiple times using the same stream until get stored in database
+			inputStreamString = new String(data);
+			QueryXML xmlQueryService =   new QueryXML();
+			ApplLogger.getLogger().debug("XML Data from Queue Is : "+ inputStreamString);
+			
+			// check whether LogLevel with database value matches value from Message, for saving message to database.
+			String logLevel = xmlQueryService.getLogLevelMessage(new ByteArrayInputStream(inputStreamString.getBytes()));
+			
+			if(saveMessageIfLogLevelMatches(logLevel)){
+				ApplLogger.getLogger().info("Message is going to be processed as loglevel matches with the configured one.."+XSLTransformer.logLevel);
+				// checking whether MessageFormat XML or not to process with XSLT
+				if(xmlQueryService.checkWhetherContentIsXml(new ByteArrayInputStream(inputStreamString.getBytes())))
+				{
+					// Source xslt = new StreamSource(new File("sample-content.xsl"));
+					TransformerFactory factory = TransformerFactory.newInstance();
+					Source xmlInput = new StreamSource(new ByteArrayInputStream(inputStreamString.getBytes()));
+					Source xslt = new StreamSource(new ByteArrayInputStream(XSLTransformer.xslTranformerStream.getBytes(StandardCharsets.UTF_8)));
+					
+					//Source xslt = new StreamSource(XSLTransformerService.class.getResourceAsStream("/xml-transformer.xsl"));
+					Transformer transformer = factory.newTransformer(xslt);
+					transformer.transform(xmlInput,	new StreamResult(outputXML));
 				}else{
-					 auditMasterBean = (AuditMaster) beanList.get(1);
-					 auditDetailBean = (AuditDetail) beanList.get(0);
+					ApplLogger.getLogger().info("MessageFormat is not XML.. So not transforming using XSLT...");
+					IOUtils.copy(new ByteArrayInputStream(inputStreamString.getBytes()), outputXML);
 				}
+				ApplLogger.getLogger().info("Output XML Data is : " + outputXML);
+				// Parse XML and Map to POJO and then save them to Database..
+				processXmlAndSave(saveOnErrorXMLMessage, outputXML);
+				}
+			else{
+				ApplLogger.getLogger().info("LogLevel of Message does not match with the configured LogLevel : "+XSLTransformer.logLevel);
+				ApplLogger.getLogger().warn("Message is not going to get saved to db : "+inputStreamString);
+			}
+		} catch (Exception e) {
+			ApplLogger.getLogger().warn("Message is not going to get saved to db : "+inputStreamString);
+			ApplLogger.getLogger().error("Exception caught while parsing the xml from Queue and can't parse :",e);
+		}
+		finally{
+			// Nullify all properties.
+			data=null;
+			inputStreamString=null;
+		}
+		
+	}
+	
+	
+	@SuppressWarnings("rawtypes")
+	public void processXmlAndSave(ByteArrayOutputStream saveOnErrorXMLMessage, ByteArrayOutputStream outputXML ) throws IOException{
+		saveOnErrorXMLMessage = outputXML;
+		ApplLogger.getLogger().info("XML formatting and pre processing is done.. Starting parse xml and save..");
+		List beanList = new QueryXML().mappingXMLToPojo(new ByteArrayInputStream(outputXML.toByteArray()));
+		if(beanList!=null && beanList.size()==2){
+			AuditMaster auditMasterBean = null;
+			AuditDetail auditDetailBean = null;
+			if(beanList.get(0) instanceof AuditMaster){
+				auditMasterBean = (AuditMaster) beanList.get(0);
+				auditDetailBean = (AuditDetail) beanList.get(1);
+			}else{
+				auditMasterBean = (AuditMaster) beanList.get(1);
+				auditDetailBean = (AuditDetail) beanList.get(0);
+			}
 			ApplLogger.getLogger().info("AuditMaster Data is : "+auditMasterBean);
 			ApplLogger.getLogger().info("AuditDetail Data is : "+auditDetailBean);
 
@@ -123,21 +144,22 @@ public class XSLTransformerService {
 					auditDetailService.create(auditDetailBean);
 				else
 					ApplLogger.getLogger().info("AuditDetailService bean is not created by spring container..");
+				
+				ApplLogger.getLogger().info("Queue message is processed successfully with the message unique id : "+auditMasterBean.getUniqueProcessID());
 			}catch(Exception e){
 				ApplLogger.getLogger().error("Exception caught while saving to DB and saving the message to FileSystem.. :",e);
-				FileUtils.writeByteArrayToFile(new File("C:\\Recover\\Save\\Message_"+getFormattedTimestamp()), saveOnErrorXMLMessage.toByteArray());
+				FileUtils.writeByteArrayToFile(new File(XSLTransformer.retryPath+"Message_"+getFormattedTimestamp()), saveOnErrorXMLMessage.toByteArray());
 			}
-            
-			}
-		} catch (Exception e) {
-			ApplLogger.getLogger().error("Exception caught while parsing the xml from Queue and can't parse :",e);
-			try {
-				FileUtils.writeByteArrayToFile(new File("C:\\Recover\\ProcessAndSave\\Message_"+getFormattedTimestamp()), data);
-			} catch (IOException e1) {
-				ApplLogger.getLogger().error("Exception caught while saving xml message to FileSystem :",e1);
+			finally{
+				saveOnErrorXMLMessage.close();
+				outputXML.close();
 			}
 		}
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -152,6 +174,24 @@ public class XSLTransformerService {
 		// representation of a date with the defined format.
 		String reportDate = df.format(today);
 		return reportDate;
+	}
+	
+	private boolean saveMessageIfLogLevelMatches(String logLevel){
+		if(logLevel==null || logLevel.isEmpty())
+			return false;
+		else{
+			if(XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.DEBUG.toString()) || XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.ALL.toString()))
+				return true;
+			else if(XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.INFO.toString()) && ( LogLevel.INFO.toString().equalsIgnoreCase(logLevel) || LogLevel.WARN.toString().equalsIgnoreCase(logLevel) || LogLevel.ERROR.toString().equalsIgnoreCase(logLevel) || LogLevel.FATAL.toString().equalsIgnoreCase(logLevel)))
+				return true;
+			else if(XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.WARN.toString()) && (LogLevel.WARN.toString().equalsIgnoreCase(logLevel) || LogLevel.ERROR.toString().equalsIgnoreCase(logLevel) || LogLevel.FATAL.toString().equalsIgnoreCase(logLevel)))
+				return true;
+			else if(XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.ERROR.toString()) && (LogLevel.ERROR.toString().equalsIgnoreCase(logLevel) || LogLevel.FATAL.toString().equalsIgnoreCase(logLevel)))
+				return true;
+			else if(XSLTransformer.logLevel.equalsIgnoreCase(LogLevel.FATAL.toString()) && LogLevel.FATAL.toString().equalsIgnoreCase(logLevel))
+				return true;
+		}
+		return false;
 	}
 	
 	

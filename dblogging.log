@@ -1,0 +1,150 @@
+2015-02-27 10:08:06 ERROR ApplLogger:45 - Error caught while saving the file info again...!!!
+java.lang.NullPointerException
+	at org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:1793)
+	at org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:1769)
+	at org.apache.commons.io.IOUtils.copy(IOUtils.java:1744)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:36)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:10:30 ERROR ApplLogger:45 - Error caught while saving the file info again...!!!
+java.lang.NullPointerException
+	at org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:1793)
+	at org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:1769)
+	at org.apache.commons.io.IOUtils.copy(IOUtils.java:1744)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:36)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:13 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:13 INFO  ApplLogger:52 - Parsing the formatted XML and map with POJOs....
+2015-02-27 10:21:13 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:13 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=MBASE, MessageFormat=XML, Host=BrokerHost1, TransType=270103, MessageID=jf-feewfef-efef, ServiceID=, ApplName=RIBMY, AppID=RIBMY, UniqueProcessID=35435436546011, JournalSeq=1, LogLevel=info, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=Mon Nov 10 00:00:00 SGT 2014, UpdatedDateTime=Thu Feb 19 00:00:00 SGT 2015, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:13 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=35435436546011, MessageID=jf-feewfef-efef, MessageType=null, CreatedDateTime=null, UpdatedDateTime=Thu Feb 19 00:00:00 SGT 2015]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:119 - XML formatting and pre processing is done.. Starting parse xml and save..
+2015-02-27 10:21:14 ERROR ApplLogger:75 - Error while mapping the xml data : 
+org.xml.sax.SAXParseException; lineNumber: 92; columnNumber: 12; The processing instruction target matching "[xX][mM][lL]" is not allowed.
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:257)
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:347)
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:121)
+	at com.hlb.dblogging.jpa.service.QueryXML.mappingXMLToPojo(QueryXML.java:51)
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:120)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)
+2015-02-27 10:21:14 INFO  ApplLogger:79 - Successfully mapped xml to pojo and returning the list of size : 2
+2015-02-27 10:21:14 INFO  ApplLogger:131 - AuditMaster Data is : AuditMaster [id=0, LogInterface=null, MessageFormat=null, Host=null, TransType=null, MessageID=null, ServiceID=null, ApplName=null, AppID=null, UniqueProcessID=null, JournalSeq=0, LogLevel=null, StatusCode=null, ErrorCode=null, ErrorMessage=null, ReasonCode=null, TransDateTime=null, UpdatedDateTime=null, CreatedDateTime=null, CreatedBy=null, UpdatedBy=null, CustomString1=null, CustomString2=null, CustomString3=null, CustomInt1=0, CustomInt2=0, CustomInt3=0, CustomDate1=null, CustomDate2=null]
+2015-02-27 10:21:14 INFO  ApplLogger:132 - AuditDetail Data is : AuditDetail [id=0, UniqueProcessID=null, MessageID=null, MessageType=null, CreatedDateTime=null, UpdatedDateTime=null]
+2015-02-27 10:21:14 ERROR ApplLogger:150 - Exception caught while saving to DB and saving the message to FileSystem.. :
+java.lang.NullPointerException
+	at com.hlb.dblogging.mdb.service.XSLTransformerService.processXmlAndSave(XSLTransformerService.java:136)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.saveAllFailedMessagesInDirectory(SaveMessageService.java:38)
+	at com.hlb.dblogging.quartz.services.SaveMessageService.main(SaveMessageService.java:50)

@@ -1,8 +1,12 @@
 package com.hlb.dblogging.quartz.services;
 
+import java.util.Date;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import com.hlb.dblogging.log.utility.ApplLogger;
 
 public class RetryFailedMessageSavingJob extends QuartzJobBean{	
 
@@ -10,7 +14,8 @@ public class RetryFailedMessageSavingJob extends QuartzJobBean{
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException{
 			try {
-				messageServiceJob.saveAllFailedMessagesOfToday();
+				ApplLogger.getLogger().info("Quartz schedular is starting again..."+new Date());
+				messageServiceJob.saveAllFailedMessagesInDirectory();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}		
