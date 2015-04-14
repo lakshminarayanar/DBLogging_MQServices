@@ -20,6 +20,6 @@
 	</listener>
 
 	<listener>
-		<listener-class>com.hlb.dblogging.xslt.utility.MyContextListenerClass</listener-class>
+		<listener-class>com.hlb.dblogging.xslt.utility.CustomMQContextListener</listener-class>
 	</listener>
 </web-app> 

@@ -1,20 +1,10 @@
 package com.hlb.dblogging.mdb.listener;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 
@@ -62,8 +52,8 @@ import com.hlb.dblogging.mdb.service.XSLTransformerService;
            {  
         	 try {
 				new XSLTransformerService().processXMLMessage(message);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				ApplLogger.getLogger().error("Error caught while processing the message from Queue : ", e);
 			};
            }
        }

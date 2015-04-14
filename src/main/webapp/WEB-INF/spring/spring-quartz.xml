@@ -10,21 +10,30 @@
 	<import resource="spring-jpa.xml"/>
 	
 	<bean id="retrySavingMessageJob" class="com.hlb.dblogging.quartz.services.RetryFailedMessageSavingJob"></bean>
+	<bean id="updteSettingsJob" class="com.hlb.dblogging.quartz.services.UpdateConfigurationSettingsJob"></bean>
 	
 	
 	<bean name="saveFailedMessagesJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
 			<property name="jobClass" value="com.hlb.dblogging.quartz.services.RetryFailedMessageSavingJob"></property>	
 	</bean>
+	<bean name="updteSettingsJobBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+			<property name="jobClass" value="com.hlb.dblogging.quartz.services.UpdateConfigurationSettingsJob"></property>	
+	</bean>
 	
 	<bean id="cronTriggerSaveFailedMessagesJob" class="org.springframework.scheduling.quartz.CronTriggerBean">
 			<property name="jobDetail" ref="saveFailedMessagesJob"></property>
-			<property name="cronExpression" value="0 0/5 * * * ?"></property>	
+			<property name="cronExpression" value="0 0 2 * * ?"></property>	
+	</bean>
+	<bean id="cronTriggerUpdateSettingsJobBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+			<property name="jobDetail" ref="updteSettingsJobBean"></property>
+			<property name="cronExpression" value="0 0 6 * * ?"></property>	
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 			<property name="triggers">
 				<list>
 					<ref bean="cronTriggerSaveFailedMessagesJob" />
+					<ref bean="cronTriggerUpdateSettingsJobBean" />
 				</list>			
 			</property>
 	</bean>
