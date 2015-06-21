@@ -130,20 +130,26 @@ public class XSLTransformerService {
 			}
 			ApplLogger.getLogger().info("AuditMaster Data is : "+auditMasterBean);
 			ApplLogger.getLogger().info("AuditDetail Data is : "+auditDetailBean);
-
+			long auditMasterSavedId ;
 			try{
 				ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
 				AuditMasterService auditMasterService = (AuditMasterService) applicationContext.getBean("auditMasterService"); 
 				if(auditMasterService!=null)
-					auditMasterService.create(auditMasterBean);
-				else
+					auditMasterSavedId = auditMasterService.create(auditMasterBean);
+				else{
 					ApplLogger.getLogger().info("AuditMasterService bean is not created by spring container..");
+					throw new RuntimeException("AuditMasterService bean is not created by spring container..");
+				}
 
 				AuditDetailService auditDetailService = (AuditDetailService) applicationContext.getBean("auditDetailService"); 
-				if(auditDetailService!=null)
+				if(auditDetailService!=null && auditMasterSavedId >0){
+					auditDetailBean.setAuditMasterId(auditMasterSavedId);
 					auditDetailService.create(auditDetailBean);
-				else
+				}
+				else{
 					ApplLogger.getLogger().info("AuditDetailService bean is not created by spring container..");
+					throw new RuntimeException("AuditDetailService bean is not created by spring container or AuditMaster data is not saved");
+				}
 				
 				ApplLogger.getLogger().info("Queue message is processed successfully with the message unique id : "+auditMasterBean.getUniqueProcessID());
 			}catch(Exception e){
