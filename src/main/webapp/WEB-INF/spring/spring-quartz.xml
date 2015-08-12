@@ -22,11 +22,11 @@
 	
 	<bean id="cronTriggerSaveFailedMessagesJob" class="org.springframework.scheduling.quartz.CronTriggerBean">
 			<property name="jobDetail" ref="saveFailedMessagesJob"></property>
-			<property name="cronExpression" value="0 0/5 * * * ?"></property>	
+			<property name="cronExpression" value="0 0 3 * * ?"></property>	
 	</bean>
 	<bean id="cronTriggerUpdateSettingsJobBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
 			<property name="jobDetail" ref="updteSettingsJobBean"></property>
-			<property name="cronExpression" value="0 0/30 * * * ?"></property>	
+			<property name="cronExpression" value="0 0/5 * * * ?"></property>	
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

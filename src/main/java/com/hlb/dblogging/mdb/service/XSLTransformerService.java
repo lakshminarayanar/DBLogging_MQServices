@@ -56,6 +56,8 @@ public class XSLTransformerService {
 	}
 	
 	public void processXMLMessage(Message message) throws ParseException{
+		ApplLogger.getLogger().info("Started processing XML message...");
+		/*ApplLogger.getLogger().info("Yes.. Really starting...");*/
 		byte data[] = null;
 		String inputStreamString = null;
 		ByteArrayOutputStream outputXML = null;
@@ -80,14 +82,26 @@ public class XSLTransformerService {
 				// checking whether MessageFormat XML or not to process with XSLT
 				if(xmlQueryService.checkWhetherContentIsXml(new ByteArrayInputStream(inputStreamString.getBytes())))
 				{
-					// Source xslt = new StreamSource(new File("sample-content.xsl"));
-					TransformerFactory factory = TransformerFactory.newInstance();
-					Source xmlInput = new StreamSource(new ByteArrayInputStream(inputStreamString.getBytes()));
-					Source xslt = new StreamSource(new ByteArrayInputStream(XSLTransformer.xslTranformerStream.getBytes(StandardCharsets.UTF_8)));
-					
-					//Source xslt = new StreamSource(XSLTransformerService.class.getResourceAsStream("/xml-transformer.xsl"));
-					Transformer transformer = factory.newTransformer(xslt);
-					transformer.transform(xmlInput,	new StreamResult(outputXML));
+					// Global XSLT transform checking
+					if(XSLTransformer.isSaveEnabled){
+						String transType =	xmlQueryService.getValueByTagName(new ByteArrayInputStream(inputStreamString.getBytes()),"//TransType");
+						String xsltToBeUsed = XSLTransformer.xsltMap.get(transType);
+						Source xslt;
+						if(xsltToBeUsed!=null ){
+							 xslt = new StreamSource(new ByteArrayInputStream(xsltToBeUsed.getBytes(StandardCharsets.UTF_8)));
+						}else{
+							 xslt = new StreamSource(new ByteArrayInputStream(XSLTransformer.xsltMap.get("ALL").getBytes(StandardCharsets.UTF_8)));
+						}
+						TransformerFactory factory = TransformerFactory.newInstance();
+						Source xmlInput = new StreamSource(new ByteArrayInputStream(inputStreamString.getBytes()));
+						//Source xslt = new StreamSource(XSLTransformerService.class.getResourceAsStream("/xml-transformer.xsl"));
+						Transformer transformer = factory.newTransformer(xslt);
+						transformer.transform(xmlInput,	new StreamResult(outputXML));
+						
+					}else{
+						ApplLogger.getLogger().info("Global XSLT Savings not enabled, so not transforming the XSLT message...");
+						IOUtils.copy(new ByteArrayInputStream(inputStreamString.getBytes()), outputXML);
+					}
 				}else{
 					ApplLogger.getLogger().info("MessageFormat is not XML.. So not transforming using XSLT...");
 					IOUtils.copy(new ByteArrayInputStream(inputStreamString.getBytes()), outputXML);
@@ -109,6 +123,7 @@ public class XSLTransformerService {
 			data=null;
 			inputStreamString=null;
 		}
+		ApplLogger.getLogger().info("Commpleted processing XML message...");
 		
 	}
 	

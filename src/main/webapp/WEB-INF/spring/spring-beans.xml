@@ -15,5 +15,8 @@
 	<bean id="configurationBean" class="com.hlb.dblogging.jpa.model.ConfigurationProperties"></bean>
 	<bean id="configurationPropertiesService" class="com.hlb.dblogging.jpa.service.ConfigurationPropertiesServiceImpl"></bean>
 	
+	<bean id="xslt" class="com.hlb.dblogging.jpa.model.XSLT"></bean>
+	<bean id="xsltService" class="com.hlb.dblogging.jpa.service.XSLTServiceImpl"></bean>
+	
 	<bean id="applicationContextProvider" class="com.hlb.dblogging.app.context.ApplicationContextProvider"></bean>
 </beans>
