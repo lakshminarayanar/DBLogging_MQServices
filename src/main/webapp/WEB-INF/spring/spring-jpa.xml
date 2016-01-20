@@ -32,7 +32,7 @@
    </bean>
  
   <!--  <jee:jndi-lookup id="dataSource" jndi-name="jndi/Test" cache="true" lookup-on-startup="true"/> -->
-    <jee:jndi-lookup id="dataSource" jndi-name="jms/dbloggingConnFactory" cache="true" lookup-on-startup="true"/> 
+  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/esbmonDatasource" cache="true" lookup-on-startup="true"/> 
   
   <!--  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
