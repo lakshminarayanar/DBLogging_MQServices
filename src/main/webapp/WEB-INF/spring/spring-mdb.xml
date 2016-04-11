@@ -7,8 +7,12 @@
   http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:queue_config.properties"></property>
+</bean>
 	<!-- <jee:jndi-lookup id="myConnectionFactory" jndi-name="jms/SampleMDBConnectionFactory" resource-ref="false" lookup-on-startup="true" /> -->
-	<jee:jndi-lookup id="myConnectionFactory" jndi-name="jms/dbloggingConnFactory" resource-ref="false" lookup-on-startup="true" />
+	<jee:jndi-lookup id="myConnectionFactory" jndi-name="${connectionfactory.name}" resource-ref="false" lookup-on-startup="true" />
  
 
 	<bean id="myMessageListenerContainer"
@@ -16,7 +20,7 @@
 		<property name="connectionFactory" ref="myConnectionFactory" />
 		<property name="destinationResolver" ref="jndiDestinationResolver" />
 		<!-- <property name="destinationName" value="jms/SampleMDBQueue" /> -->
-		<property name="destinationName" value="jms/esbmonQueue" />
+		<property name="destinationName" value="${queue.name}" />
 		<property name="messageListener" ref="myMessageListener" />
 	</bean>
 

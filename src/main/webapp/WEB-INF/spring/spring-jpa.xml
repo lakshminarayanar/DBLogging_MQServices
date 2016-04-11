@@ -31,8 +31,14 @@
       </property>
    </bean>
  
+<bean 
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+ 
+    <property name="location" value="classpath:queue_config.properties" ></property>
+ 
+</bean>
   <!--  <jee:jndi-lookup id="dataSource" jndi-name="jndi/Test" cache="true" lookup-on-startup="true"/> -->
-  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/esbmonDatasource" cache="true" lookup-on-startup="true"/> 
+  <jee:jndi-lookup id="dataSource" jndi-name="${datasource.name}" cache="true" lookup-on-startup="true"/> 
   
   <!--  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
